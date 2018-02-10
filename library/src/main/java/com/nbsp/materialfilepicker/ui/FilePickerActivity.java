@@ -38,8 +38,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     public static final String ARG_CHOOSE_FOLDER_MODE = "arg_folder_mode";
 
     public static final String STATE_START_PATH = "state_start_path";
-    private static final String STATE_CURRENT_PATH = "state_current_path";
     public static final String RESULT_FILE_PATH = "result_file_path";
+    private static final String STATE_CURRENT_PATH = "state_current_path";
     private static final int HANDLE_CLICK_DELAY = 150;
 
     private Toolbar mToolbar;
@@ -239,23 +239,10 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     }
 
     private void handleFileClicked(final File clickedFile) {
-
-//        if (mChooseFolderMode && clickedFile.isDirectory() && clickedFile.getAbsolutePath().equals(mCurrentPath)) {
-//            setResultAndFinish(clickedFile.getPath());
-//        } else if (clickedFile.isDirectory()) {
-//            mCurrentPath = clickedFile.getPath();
-//            // If the user wanna go to the emulated directory, he will be taken to the
-//            // corresponding user emulated folder.
-//            if (mCurrentPath.equals("/storage/emulated"))
-//                mCurrentPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-//            addFragmentToBackStack(mCurrentPath);
-//            updateTitle();
-//        } else if (!mChooseFolderMode) {
-//            setResultAndFinish(clickedFile.getPath());
-//        }
-//
         if (!isFinishing()) {
-            if (clickedFile.isDirectory()) {
+            if (mChooseFolderMode && clickedFile.isDirectory() && clickedFile.getAbsolutePath().equals(mCurrentPath)) {
+                setResultAndFinish(clickedFile.getPath());
+            } else if (clickedFile.isDirectory()) {
                 mCurrentPath = clickedFile.getPath();
                 // If the user wanna go to the emulated directory, he will be taken to the
                 // corresponding user emulated folder.
@@ -263,7 +250,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
                     mCurrentPath = Environment.getExternalStorageDirectory().getAbsolutePath();
                 addFragmentToBackStack(mCurrentPath);
                 updateTitle();
-            } else {
+            } else if (!mChooseFolderMode) {
                 setResultAndFinish(clickedFile.getPath());
             }
         } else {
