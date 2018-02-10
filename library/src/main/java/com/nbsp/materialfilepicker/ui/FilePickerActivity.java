@@ -209,8 +209,12 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
         if (!mCurrentPath.equals(mStartPath)) {
             fm.popBackStack();
-            mCurrentPath = FileUtils.cutLastSegmentOfPath(mCurrentPath);
-            updateTitle();
+            if (!mCurrentPath.equals("")) {
+                mCurrentPath = FileUtils.cutLastSegmentOfPath(mCurrentPath);
+                updateTitle();
+            } else {
+                // Do nothing
+            }
         } else {
             setResult(RESULT_CANCELED);
             finish();
@@ -235,18 +239,35 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     }
 
     private void handleFileClicked(final File clickedFile) {
-        if (mChooseFolderMode && clickedFile.isDirectory() && clickedFile.getAbsolutePath().equals(mCurrentPath)) {
-            setResultAndFinish(clickedFile.getPath());
-        } else if (clickedFile.isDirectory()) {
-            mCurrentPath = clickedFile.getPath();
-            // If the user wanna go to the emulated directory, he will be taken to the
-            // corresponding user emulated folder.
-            if (mCurrentPath.equals("/storage/emulated"))
-                mCurrentPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-            addFragmentToBackStack(mCurrentPath);
-            updateTitle();
-        } else if (!mChooseFolderMode) {
-            setResultAndFinish(clickedFile.getPath());
+
+//        if (mChooseFolderMode && clickedFile.isDirectory() && clickedFile.getAbsolutePath().equals(mCurrentPath)) {
+//            setResultAndFinish(clickedFile.getPath());
+//        } else if (clickedFile.isDirectory()) {
+//            mCurrentPath = clickedFile.getPath();
+//            // If the user wanna go to the emulated directory, he will be taken to the
+//            // corresponding user emulated folder.
+//            if (mCurrentPath.equals("/storage/emulated"))
+//                mCurrentPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//            addFragmentToBackStack(mCurrentPath);
+//            updateTitle();
+//        } else if (!mChooseFolderMode) {
+//            setResultAndFinish(clickedFile.getPath());
+//        }
+//
+        if (!isFinishing()) {
+            if (clickedFile.isDirectory()) {
+                mCurrentPath = clickedFile.getPath();
+                // If the user wanna go to the emulated directory, he will be taken to the
+                // corresponding user emulated folder.
+                if (mCurrentPath.equals("/storage/emulated"))
+                    mCurrentPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+                addFragmentToBackStack(mCurrentPath);
+                updateTitle();
+            } else {
+                setResultAndFinish(clickedFile.getPath());
+            }
+        } else {
+            // Do nothing
         }
     }
 
