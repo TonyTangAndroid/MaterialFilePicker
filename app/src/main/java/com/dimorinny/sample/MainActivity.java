@@ -26,13 +26,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button pickButton = (Button) findViewById(R.id.pick_from_activity);
+        Button pickButton = findViewById(R.id.pick_from_activity);
         pickButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkPermissionsAndOpenFilePicker();
             }
         });
+        Button pickFolderButton = findViewById(R.id.pick_folder_from_activity);
+        pickFolderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkPermissionsAndOpenFolderPicker();
+            }
+
+
+        });
+    }
+
+    private void checkPermissionsAndOpenFolderPicker() {
+        String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                showError();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{permission}, PERMISSIONS_REQUEST_CODE);
+            }
+        } else {
+            openFolderPicker();
+        }
     }
 
     private void checkPermissionsAndOpenFilePicker() {
@@ -74,6 +97,16 @@ public class MainActivity extends AppCompatActivity {
                 .withRequestCode(FILE_PICKER_REQUEST_CODE)
                 .withHiddenFiles(true)
                 .withTitle("Sample title")
+                .start();
+    }
+
+    private void openFolderPicker() {
+        new MaterialFilePicker()
+                .withActivity(this)
+                .withRequestCode(FILE_PICKER_REQUEST_CODE)
+                .withHiddenFiles(true)
+                .withChooseFolderMode(true)
+                .withTitle("Choose Folder")
                 .start();
     }
 

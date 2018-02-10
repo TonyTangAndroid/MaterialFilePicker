@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Intent;
 
 import com.nbsp.materialfilepicker.filter.CompositeFilter;
+import com.nbsp.materialfilepicker.filter.FolderFilter;
 import com.nbsp.materialfilepicker.filter.HiddenFilter;
 import com.nbsp.materialfilepicker.filter.PatternFilter;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
@@ -166,6 +167,10 @@ public class MaterialFilePicker {
 
         if (!mShowHidden) {
             filters.add(new HiddenFilter());
+        }
+
+        if (mChooseFolderMode) {
+            filters.add(new FolderFilter());
         }
 
         if (mFileFilter != null) {

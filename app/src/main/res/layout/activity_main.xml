@@ -11,13 +11,17 @@
         android:id="@+id/pick_from_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pick_from_activity"
-    />
+        android:text="@string/pick_from_activity"/>
+
+    <Button
+        android:id="@+id/pick_folder_from_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pick_folder_from_activity"/>
 
     <fragment
         android:id="@+id/sample_fragment"
         class="com.dimorinny.sample.SampleFragment"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-    />
+        android:layout_height="wrap_content"/>
 </LinearLayout>
