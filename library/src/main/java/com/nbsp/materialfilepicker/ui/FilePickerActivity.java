@@ -103,6 +103,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
         if (getIntent().hasExtra(ARG_CLOSEABLE)) {
             mCloseable = getIntent().getBooleanExtra(ARG_CLOSEABLE, true);
+        } else {
+            mCloseable = Boolean.TRUE;
         }
 
         mChooseFolderMode = getIntent().getBooleanExtra(ARG_CHOOSE_FOLDER_MODE, false);
