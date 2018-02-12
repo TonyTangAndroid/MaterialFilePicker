@@ -1,0 +1,8 @@
+<resources>
+    <string name="action_close">Fechar</string>
+    <string name="empty_directory_hint">Diretório vazio</string>
+    <string name="type_directory">Diretório</string>
+    <string name="type_document">Arquivo</string>
+    <string name="type_image">Imagem</string>
+    <string name="type_pdf">documento PDF</string>
+</resources>
